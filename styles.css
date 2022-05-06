@@ -8,20 +8,36 @@ body {
 .calc-container {
     border: 6px solid #10b981;
     border-radius: 14px;
-    height: 70vh;
+    height: 70%;
     width: 90%;
     max-width: 600px;
-    margin: 10% auto;
+    margin: 10vh auto;
     display: flex;
     flex-direction: column;
 }
 
-.calc-display {
+#calc-display {
     height: 10vh;
     background-color: #fff;
     border-radius: 5px;
-    margin: 5%;
+    margin: 7%;
     margin-bottom: 2.5%;
+       
+}
+
+#calc-secondary {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 1.2rem;
+    margin: 2px;
+    min-height: 1.2em;
+}
+
+#calc-main {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 2.3rem;
+    margin-top: 12px;
 }
 
 .calc-display:hover {
@@ -38,7 +54,7 @@ body {
     display: flex;
 }
 
-.clear-btn {
+#clear-btn {
     margin: auto;
     padding: 2% 5%;
     height: 70%;
@@ -53,16 +69,16 @@ body {
     transition: 0.2s;
 }
 
-.clear-btn:hover {
+#clear-btn:hover {
     background-color: #10b981;
     color: #fff;
 }
 
-.clear-btn:active {
+#clear-btn:active {
     transform: scale(0.9);
 }
 
-.delete-btn {
+#delete-btn {
     margin: auto;
     padding: 2% 5%;
     height: 70%;
@@ -77,12 +93,12 @@ body {
     transition: 0.2s;
 }
 
-.delete-btn:hover {
+#delete-btn:hover {
     background-color: #d60303;
     color: #fff;
 }
 
-.delete-btn:active {
+#delete-btn:active {
     transform: scale(0.9);
 }
 
