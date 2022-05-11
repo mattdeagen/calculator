@@ -35,13 +35,14 @@ function renderButtons() {
         // add event listener for each button
         button.addEventListener('click', () => {
             if(symbols[i] === '+'){
-                
+                toggleButton('btn-.', false)
                 // check if operate is needed - last character in secondary text
                 if(isOperator( calcSecondaryText.textContent.slice(-2) )){
                     secondNum = calcMainText.textContent
                     operate(operator, firstNum, secondNum)
                     operator = '+'
-                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.length-4)
+                    console.log(calcSecondaryText.textContent.split(" "));
+                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.split(" ").splice(-4))
                     calcSecondaryText.textContent += `${calcMainText.textContent} + `
                     firstNum = calcMainText.textContent
                     prevNum = true
@@ -54,14 +55,13 @@ function renderButtons() {
                 }
             }
             else if(symbols[i] === '-'){
-                
+                toggleButton('btn-.', false)
                 // check if operate is needed - last character in secondary text
                 if(isOperator( calcSecondaryText.textContent.slice(-2) )){
                     secondNum = calcMainText.textContent
                     operate(operator, firstNum, secondNum)
                     operator = '-'
-                    // TODO: Fix bug, substring still contains digits for large numbers
-                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.length-4)
+                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.split(" ").splice(-4))
                     calcSecondaryText.textContent += `${calcMainText.textContent} - `
                     firstNum = calcMainText.textContent
                     prevNum = true
@@ -74,13 +74,13 @@ function renderButtons() {
                 }
             }
             else if(symbols[i] === 'x'){
-                
+                toggleButton('btn-.', false)
                 // check if operate is needed - last character in secondary text
                 if(isOperator( calcSecondaryText.textContent.slice(-2) )){
                     secondNum = calcMainText.textContent
                     operate(operator, firstNum, secondNum)
                     operator = 'x'
-                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.length-4)
+                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.split(" ").splice(-4))
                     calcSecondaryText.textContent += `${calcMainText.textContent} x `
                     firstNum = calcMainText.textContent
                     prevNum = true
@@ -93,13 +93,13 @@ function renderButtons() {
                 }
             }
             else if(symbols[i] === '÷'){
-                
+                toggleButton('btn-.', false)
                 // check if operate is needed - last character in secondary text
                 if(isOperator( calcSecondaryText.textContent.slice(-2) )){
                     secondNum = calcMainText.textContent
                     operate(operator, firstNum, secondNum)
                     operator = '÷'
-                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.length-4)
+                    calcSecondaryText.textContent =  calcSecondaryText.textContent.substring(0, calcSecondaryText.textContent.split(" ").splice(-4))
                     calcSecondaryText.textContent += `${calcMainText.textContent} ÷ `
                     firstNum = calcMainText.textContent
                     prevNum = true
@@ -111,12 +111,17 @@ function renderButtons() {
                     operator = '÷'
                 }
             }
-
             else if(symbols[i] === '='){
+                toggleButton('btn-.', false)
                 secondNum = calcMainText.textContent
                 calcSecondaryText.textContent += `${secondNum} = `
                 operate(operator, firstNum, secondNum)
-            } else {
+            } 
+            else if(symbols[i] === '.'){
+                setTimeout(toggleButton('btn-.', true), 1)
+                calcMainText.textContent += symbols[i]
+            }
+            else {
                 if(prevNum) {
                     calcMainText.textContent = symbols[i] 
                     prevNum = false
@@ -131,11 +136,15 @@ function renderButtons() {
 
 }
 
+function toggleButton(btnId, btnState) {
+    document.getElementById(btnId).disabled = btnState
+}
+
 function operate(oper, num1, num2) {
     console.log(`Calculation: ${num1} ${oper} ${num2}`);
     switch(oper){
         case '+':
-            calcMainText.textContent = parseInt(num1)+parseInt(num2)
+            calcMainText.textContent = Number(num1)+Number(num2)
             break
         case '-':
             calcMainText.textContent = num1-num2
@@ -144,7 +153,15 @@ function operate(oper, num1, num2) {
             calcMainText.textContent = num1*num2
             break
         case '÷':
-            calcMainText.textContent = num1/num2
+            if(parseInt(num2) === 0) {
+                calcMainText.textContent = 'haha'
+                setTimeout(() => {
+                    calcMainText.textContent = '0'
+                    calcSecondaryText.textContent = ''
+                }, 2000)
+            } else {
+                calcMainText.textContent = num1/num2
+            }
             break
     }
 }
@@ -153,6 +170,7 @@ clearBtn.addEventListener('click', () => {
     calcMainText.textContent = '0'
     calcSecondaryText.textContent = ''
     prevNum = true
+    toggleButton('btn-.', false)
 })
 
 deleteBtn.addEventListener('click', () => {
@@ -160,3 +178,4 @@ deleteBtn.addEventListener('click', () => {
 })
 
 renderButtons()
+toggleButton('btn-.', false)

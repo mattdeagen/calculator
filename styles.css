@@ -40,7 +40,7 @@ body {
     margin-top: 12px;
 }
 
-.calc-display:hover {
+#calc-display:hover {
     background-color: rgb(197, 197, 197);
 }
 
